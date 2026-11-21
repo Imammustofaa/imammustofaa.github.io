@@ -20,197 +20,160 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
 <style>
-/* Layout: a designer's file cabinet — big name masthead, then numbered sections whose work lives in clickable folders, each folder tinted in its client's own palette. One family (Inter). */
+/* Layout: bright, poster-like portfolio — sky-blue ground, white cards, sunny yellow for every active/pressed state. Work lives behind pill buttons: client → content type → grid. One family (Inter). */
 :root{
-  --paper:#F3F5FA; --sheet:#FFFFFF; --ink:#101B3D; --muted:#5A6482; --line:#D8DDEA;
-  --cobalt:#1F4FE0; --marigold:#F5B30F;
-  --f-km:#1F4FE0; --f-km2:#F5B30F;      /* KM & Partners: kobalt + kuning */
-  --f-kmp:#0E7BE8; --f-kmp2:#9CCBFF;    /* KMP: biru langit */
-  --f-va:#1A1D54; --f-va2:#2DC39C;      /* Villa Alcheringa: navy + toska */
+  --bg:#EAF3FF; --card:#FFFFFF; --ink:#0B1B3F; --muted:#4F5F80; --line:#CFE0F7;
+  --blue:#1E6BFF; --blue-2:#5AA2FF; --yellow:#FFD233; --yellow-ink:#0B1B3F;
   --font:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
+  color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --paper:#0B1022; --sheet:#121A33; --ink:#E9EDF8; --muted:#97A1BE; --line:#26304F;
-  --cobalt:#7B9CFF; --marigold:#FFC83D;
-  --f-km:#7B9CFF; --f-kmp:#5BB2FF; --f-va:#9BA3FF; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --paper:#0B1022; --sheet:#121A33; --ink:#E9EDF8; --muted:#97A1BE; --line:#26304F;
-  --cobalt:#7B9CFF; --marigold:#FFC83D;
-  --f-km:#7B9CFF; --f-kmp:#5BB2FF; --f-va:#9BA3FF; color-scheme:dark}
-
 *{box-sizing:border-box}
-body{background:var(--paper);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
 .wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 a{color:inherit}
-:focus-visible{outline:3px solid var(--marigold);outline-offset:3px;border-radius:4px}
-.label{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:8px}
+.label{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
 
-/* Masthead */
-.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:22px;font-size:13px;color:var(--muted);flex-wrap:wrap}
-.top b{color:var(--ink);font-weight:700;letter-spacing:-.01em}
-.top nav{display:flex;gap:18px;flex-wrap:wrap}
-.top nav a{text-decoration:none;font-weight:500}
-.top nav a:hover{color:var(--cobalt)}
-.hero{padding-block:44px 56px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:48px;align-items:end;border-bottom:1.5px solid var(--ink)}
-.who{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.avatar{width:128px;height:128px;border-radius:50%;object-fit:cover;border:4px solid var(--sheet);box-shadow:0 0 0 2px var(--cobalt);flex:none;max-width:100%}
-.role{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cobalt);display:flex;align-items:center;gap:10px}
-.role::before{content:"";width:28px;height:2px;background:var(--marigold)}
-h1{font-weight:900;font-size:clamp(46px,8.4vw,108px);line-height:.92;letter-spacing:-.045em;margin:18px 0 0;text-wrap:balance}
-h1 .soft{color:var(--cobalt)}
-.lede{font-size:20px;line-height:1.5;margin:0;max-width:30ch;font-weight:500;letter-spacing:-.01em}
-.lede span{color:var(--muted);font-weight:400;display:block;font-size:16px;margin-top:12px;max-width:42ch}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
-.chip{font-size:13px;font-weight:500;border:1px solid var(--line);background:var(--sheet);padding:5px 12px;border-radius:99px}
+/* Buttons: blue at rest, yellow when pressed/active */
+.btn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:10px;padding:11px 18px;border-radius:999px;background:var(--blue);color:#fff;font-weight:700;font-size:14.5px;letter-spacing:-.005em;border:2px solid var(--blue);transition:background .18s,color .18s,transform .18s,box-shadow .18s;text-decoration:none}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px -10px var(--blue)}
+.btn[aria-pressed="true"],.btn[aria-selected="true"],.btn:active{background:var(--yellow);color:var(--yellow-ink);border-color:var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.btn.ghost{background:var(--card);color:var(--blue);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--blue)}
+.btn .count{font-size:12px;font-weight:700;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:99px}
+.btn[aria-selected="true"] .count,.btn[aria-pressed="true"] .count{background:var(--ink);color:var(--yellow)}
+.ico{width:30px;height:30px;border-radius:50%;background:#fff;color:var(--blue);display:grid;place-items:center;font-size:11px;font-weight:900;flex:none}
+.btn[aria-selected="true"] .ico{background:var(--ink);color:var(--yellow)}
+
+/* Top */
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:20px;flex-wrap:wrap}
+.top b{font-weight:900;letter-spacing:-.02em;font-size:18px}
+.top b span{color:var(--blue)}
+.top nav{display:flex;gap:6px;flex-wrap:wrap}
+.top nav a{text-decoration:none;font-weight:600;font-size:14px;padding:6px 12px;border-radius:99px}
+.top nav a:hover{background:var(--yellow)}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:40px;align-items:center;padding-block:36px 64px}
+.hello{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 14px 6px 6px;font-weight:600;font-size:14px}
+.hello i{width:10px;height:10px;border-radius:50%;background:#22C55E;margin-left:8px}
+h1{font-weight:900;font-size:clamp(44px,7.4vw,96px);line-height:1.06;letter-spacing:-.05em;margin:22px 0 18px;text-wrap:balance}
+h1 .hl{background:var(--yellow);padding:0 .12em;border-radius:.12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+h1 .bl{color:var(--blue)}
+.bio{font-size:19px;line-height:1.55;color:var(--muted);max-width:44ch;margin:0 0 26px}
+.bio b{color:var(--ink)}
+.cta{display:flex;gap:10px;flex-wrap:wrap}
+.portrait{position:relative;justify-self:center;width:min(100%,380px)}
+.portrait .blob{position:absolute;inset:6% -4% -4% 6%;background:var(--yellow);border-radius:40% 60% 55% 45%/50% 45% 55% 50%;transform:rotate(-6deg)}
+.portrait img{position:relative;display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:50%;border:8px solid var(--card);box-shadow:0 24px 50px -24px rgba(11,27,63,.5)}
+.sticker{position:absolute;background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:8px 12px;font-weight:800;font-size:13px;box-shadow:3px 3px 0 var(--ink);white-space:nowrap}
+.sticker.s1{left:-6%;bottom:12%;transform:rotate(-5deg)}
+.sticker.s2{right:-4%;top:10%;background:var(--blue);color:#fff;transform:rotate(6deg)}
 
 /* Sections */
-section.proj{padding-block:76px 8px}
-.proj-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:end;margin-bottom:28px}
-.folio{font-weight:900;font-size:clamp(56px,9vw,104px);line-height:.8;color:transparent;-webkit-text-stroke:1.5px var(--cobalt);letter-spacing:-.04em}
-.proj-head h2{font-weight:800;font-size:clamp(28px,4vw,44px);line-height:1.05;letter-spacing:-.03em;margin:0 0 8px;text-wrap:balance}
-.proj-head p{margin:0;color:var(--muted);max-width:64ch}
+section.proj{padding-block:72px 8px}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:26px}
+.head h2{font-weight:900;font-size:clamp(32px,4.6vw,54px);line-height:1;letter-spacing:-.04em;margin:6px 0 0}
+.head p{margin:8px 0 0;color:var(--muted);max-width:56ch}
+.num{font-weight:900;color:var(--blue)}
 
-/* Folder tabs */
-.folders{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.fold{all:unset;box-sizing:border-box;cursor:pointer;position:relative;display:grid;gap:14px;background:var(--sheet);border:1px solid var(--line);padding:22px;transition:transform .25s ease, box-shadow .25s ease, border-color .25s}
-.fold:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(16,27,61,.45)}
-.fold[aria-expanded="true"]{border-color:var(--c);box-shadow:0 0 0 2px var(--c) inset}
-.ficon{position:relative;width:92px;height:68px;margin-top:8px}
-.ficon .back{position:absolute;inset:0;background:var(--c);border-radius:5px 9px 9px 9px}
-.ficon .back::before{content:"";position:absolute;left:0;top:-9px;width:38px;height:12px;background:var(--c);border-radius:5px 5px 0 0}
-.ficon .paper{position:absolute;left:10px;right:10px;top:-5px;height:54px;background:#fff;border:1px solid var(--line);transform:rotate(-4deg);transition:transform .3s}
-.ficon .paper.p2{transform:rotate(3deg);top:-1px}
-.ficon .front{position:absolute;left:0;right:0;bottom:0;height:48px;background:var(--c2);border-radius:3px 3px 9px 9px;display:grid;place-items:center;font-weight:800;font-size:17px;color:#101B3D}
-.fold:hover .ficon .paper,.fold[aria-expanded="true"] .ficon .paper{transform:rotate(-8deg) translateY(-7px)}
-.fold:hover .ficon .paper.p2,.fold[aria-expanded="true"] .ficon .paper.p2{transform:rotate(6deg) translateY(-4px)}
-.fold .ft{font-weight:800;font-size:21px;letter-spacing:-.02em;line-height:1.2}
-.fold .fd{color:var(--muted);font-size:14px;line-height:1.5}
-.fold .fo{font-size:12.5px;font-weight:600;color:var(--c)}
-.f-km{--c:var(--f-km);--c2:var(--f-km2)}
-.f-kmp{--c:var(--f-kmp);--c2:var(--f-kmp2)}
-.f-va{--c:var(--f-va);--c2:var(--f-va2)}
+/* Social media gallery */
+.board{background:var(--card);border-radius:28px;padding:clamp(16px,3vw,32px);border:1px solid var(--line)}
+.row-btns{display:flex;gap:10px;flex-wrap:wrap}
+.row-btns + .row-btns{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+.client-info{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline;margin:22px 0 4px}
+.client-info h3{margin:0;font-size:24px;font-weight:800;letter-spacing:-.02em}
+.client-info p{margin:0;color:var(--muted);font-size:14.5px;max-width:60ch}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:20px}
+.gal button{all:unset;cursor:zoom-in;display:block;border-radius:14px;overflow:hidden;background:var(--bg);transition:transform .2s, box-shadow .2s}
+.gal button:hover{transform:translateY(-4px);box-shadow:0 14px 24px -14px rgba(11,27,63,.45)}
+.gal img{display:block;width:100%;aspect-ratio:1;object-fit:cover}
+.gal.tall img{aspect-ratio:4/5}
 
-.panel{margin-top:22px;border-top:3px solid var(--c);background:color-mix(in srgb,var(--c) 5%,var(--paper));padding:28px clamp(14px,3vw,32px) 36px}
-.panel-head{display:flex;justify-content:space-between;gap:16px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
-.panel-head h3{margin:0;font-size:26px;font-weight:800;letter-spacing:-.02em}
-.panel-head p{margin:0;color:var(--muted);max-width:60ch}
-.cat{margin-top:30px}
-.cat h4{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:15px;font-weight:700}
-.cat h4::before{content:"";width:10px;height:10px;border-radius:2px;background:var(--c)}
-.cat h4 small{font-weight:500;color:var(--muted);font-size:13px}
+/* Logo cards */
+.logos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.logo-card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:14px}
+.logo-card .art{border-radius:16px;overflow:hidden;background:var(--bg);cursor:zoom-in;all:unset;display:block}
+.logo-card .art img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px}
+.logo-card .meta{padding:2px 6px 6px;display:flex;flex-direction:column;gap:6px;flex:1}
+.logo-card h3{margin:0;font-size:22px;font-weight:800;letter-spacing:-.02em}
+.logo-card p{margin:0;color:var(--muted);font-size:14px;flex:1}
+.logo-card .btn{align-self:flex-start;margin-top:8px;font-size:13.5px;padding:9px 16px}
 
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
-.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
-.proof{position:relative;margin:0;background:var(--sheet);padding:9px 9px 11px;border:1px solid var(--line);transition:transform .25s ease, box-shadow .25s ease}
-.proof:hover{transform:translateY(-4px);box-shadow:0 14px 30px -18px rgba(16,27,61,.45)}
-.proof button{all:unset;display:block;width:100%;cursor:zoom-in}
-.proof img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:var(--line)}
-.proof.wide img{aspect-ratio:auto;height:auto}
-.proof.sq img{object-fit:contain;background:var(--paper)}
-.proof figcaption{margin-top:9px;font-size:13px;line-height:1.35;font-weight:600}
-.proof figcaption i{display:block;font-style:normal;font-weight:400;color:var(--muted);font-size:12px;margin-top:2px}
-.span2{grid-column:span 2}
-.span4{grid-column:1/-1}
-
-/* Logo projects */
-.logo-proj{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:32px;padding-block:36px;border-top:1px solid var(--line)}
-.logo-proj:first-of-type{border-top:0;padding-top:0}
-.logo-info h3{margin:6px 0 10px;font-size:30px;font-weight:800;letter-spacing:-.03em}
-.logo-info p{margin:0 0 14px;color:var(--muted)}
-.logo-info a{color:var(--cobalt);font-size:13.5px;font-weight:600}
-.swatches{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.sw{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}
-.sw span{width:20px;height:20px;border-radius:50%;border:1px solid var(--line)}
-.logo-proj .proof img{aspect-ratio:16/9;object-fit:cover}
-.logo-proj .proof.wide img{aspect-ratio:auto}
-
-/* Character */
-.char{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:36px;align-items:center;margin-top:44px}
-.char .proof img{aspect-ratio:1200/1696;object-fit:contain}
-.charinfo{display:grid;gap:12px}
-.charinfo h3{margin:0;font-size:clamp(30px,4vw,44px);font-weight:800;letter-spacing:-.03em}
-.charinfo p{margin:0;color:var(--muted);max-width:56ch}
-.charinfo dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 18px;margin:0;font-size:14.5px;border-top:1px solid var(--line);padding-top:12px}
-.charinfo dt{color:var(--muted)}
-.charinfo dd{margin:0;font-weight:600}
+/* 3D */
+.three{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.tile{all:unset;cursor:zoom-in;display:block;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.tile img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
+.tile.wide{grid-column:1/-1}
+.tile.wide img{aspect-ratio:auto}
+.char{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:32px;align-items:center;margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:28px;padding:clamp(14px,3vw,28px)}
+.char .tile img{aspect-ratio:1200/1696;object-fit:contain;background:#fff}
+.char h3{margin:6px 0 10px;font-size:clamp(28px,3.6vw,40px);font-weight:900;letter-spacing:-.04em}
+.char p{margin:0 0 14px;color:var(--muted)}
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.tag{background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:4px 12px;font-size:13px;font-weight:600}
 
 /* Video */
 .vids{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.vid{display:block;text-decoration:none;background:var(--sheet);border:1px solid var(--line);padding:10px 10px 14px;transition:transform .25s ease}
+.vid{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:10px 10px 16px;transition:transform .2s}
 .vid:hover{transform:translateY(-4px)}
-.vid .thumb{position:relative;overflow:hidden}
+.vid .thumb{position:relative;overflow:hidden;border-radius:14px}
 .vid img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
-.play{position:absolute;left:14px;bottom:14px;width:50px;height:50px;border-radius:50%;background:var(--marigold);display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.3)}
-.play svg{width:17px;height:17px;margin-left:3px;fill:#101B3D}
-.vid h3{font-weight:700;font-size:18px;margin:12px 0 2px;letter-spacing:-.01em}
-.vid p{margin:0;font-size:13.5px;color:var(--muted)}
+.play{position:absolute;left:12px;bottom:12px;width:48px;height:48px;border-radius:50%;background:var(--yellow);border:2px solid var(--ink);display:grid;place-items:center}
+.play svg{width:16px;height:16px;margin-left:3px;fill:var(--ink)}
+.vid h3{font-weight:800;font-size:17px;margin:12px 6px 2px}
+.vid p{margin:0 6px;font-size:13.5px;color:var(--muted)}
 
 /* Certificates */
-.cfold{--c:var(--cobalt);--c2:var(--marigold);all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:24px;align-items:center;width:100%;background:var(--sheet);border:1px solid var(--line);padding:22px 26px 22px 22px;transition:transform .25s, box-shadow .25s}
-.cfold:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(16,27,61,.45)}
-.cfold:hover .ficon .paper,.cfold[aria-expanded="true"] .ficon .paper{transform:rotate(-8deg) translateY(-7px)}
-.cfold .ft{font-weight:800;font-size:22px;letter-spacing:-.02em}
-.cfold .fd{color:var(--muted);font-size:14px}
-.cfold .fo{font-size:12.5px;font-weight:600;color:var(--cobalt);white-space:nowrap}
-.fpanel{margin-top:18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.cert{margin:0;background:var(--sheet);border:1px solid var(--line);padding:10px 10px 16px;display:flex;flex-direction:column;gap:10px}
+.certs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:18px}
+.cert{margin:0;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:12px 12px 18px;display:flex;flex-direction:column;gap:8px}
 .cert button{all:unset;cursor:zoom-in;display:block}
-.cert img{display:block;width:100%;aspect-ratio:4/3;object-fit:contain;background:#fff;border:1px solid var(--line)}
-.cert .label{color:var(--cobalt)}
-.cert h4{font-weight:700;font-size:17px;line-height:1.25;margin:0}
-.cert dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;margin:0;font-size:13px}
-.cert dt{color:var(--muted)}
-.cert dd{margin:0;overflow-wrap:anywhere}
-.cert a{color:var(--cobalt);font-size:12.5px;font-weight:600}
+.cert img{display:block;width:100%;aspect-ratio:4/3;object-fit:contain;background:#fff;border-radius:12px;border:1px solid var(--line)}
+.cert h4{margin:4px 0 0;font-size:16.5px;font-weight:800;line-height:1.25}
+.cert span{font-size:13px;color:var(--muted)}
+.cert a{color:var(--blue);font-size:13px;font-weight:700}
 
-/* Contact */
-.foot{margin-top:96px;background:var(--ink);color:var(--paper)}
-.foot .wrap{padding-block:64px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:48px}
-.foot h2{font-weight:900;font-size:clamp(34px,5vw,60px);line-height:.95;letter-spacing:-.04em;margin:0 0 18px}
-.foot h2 em{font-style:normal;color:var(--marigold)}
+/* Footer */
+.foot{margin-top:96px;background:var(--blue);color:#fff;border-radius:36px 36px 0 0}
+.foot .wrap{padding-block:60px 30px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px}
+.foot h2{font-weight:900;font-size:clamp(34px,5vw,62px);line-height:.98;letter-spacing:-.045em;margin:0 0 18px}
+.foot h2 span{background:var(--yellow);color:var(--ink);padding:0 .14em;border-radius:.12em}
 .tools{display:flex;flex-wrap:wrap;gap:8px}
-.tools span{border:1px solid color-mix(in srgb,var(--paper) 30%,transparent);border-radius:99px;padding:5px 12px;font-size:13.5px}
-.contact{display:grid;gap:4px;align-content:start}
-.row{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid color-mix(in srgb,var(--paper) 22%,transparent);padding-block:12px}
-.row > span:first-child{font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
-.row a,.row b{font-weight:600;text-decoration:none;overflow-wrap:anywhere;text-align:right}
-.row a:hover{color:var(--marigold)}
-.copy{all:unset;cursor:pointer;font-size:11px;font-weight:600;border:1px solid color-mix(in srgb,var(--paper) 35%,transparent);padding:2px 8px;border-radius:99px;margin-left:8px}
-.copy:hover{background:var(--marigold);color:#101B3D}
-.sig{font-size:12.5px;opacity:.6;padding-block:18px;border-top:1px solid color-mix(in srgb,var(--paper) 15%,transparent)}
+.tools span{border:1.5px solid rgba(255,255,255,.5);border-radius:99px;padding:5px 12px;font-size:13.5px;font-weight:600}
+.contact{display:grid;gap:2px;align-content:start}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.3);padding-block:12px}
+.row > span:first-child{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.row a,.row b{font-weight:700;text-decoration:none;overflow-wrap:anywhere;text-align:right}
+.row a:hover{color:var(--yellow)}
+.copy{all:unset;cursor:pointer;font-size:11.5px;font-weight:700;background:#fff;color:var(--blue);padding:3px 10px;border-radius:99px;margin-left:8px}
+.copy:hover{background:var(--yellow);color:var(--ink)}
+.sig{grid-column:1/-1;font-size:13px;opacity:.8;border-top:1px solid rgba(255,255,255,.25);padding-top:18px}
 
 /* Lightbox */
-.lb{position:fixed;inset:0;background:rgba(6,10,24,.93);display:grid;place-items:center;z-index:50;padding:calc(env(safe-area-inset-top,0px) + 24px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 24px) max(16px,env(safe-area-inset-left,0px))}
-.lb img{max-width:min(92vw,1100px);max-height:84vh;width:auto;height:auto;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.lb p{color:#E9EDF8;font-size:13px;text-align:center;margin:14px 0 0}
-.lb .x,.lb .nav{all:unset;position:absolute;color:#fff;cursor:pointer;font-size:28px;line-height:1;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:rgba(255,255,255,.1)}
+.lb{position:fixed;inset:0;background:rgba(8,18,44,.92);display:grid;place-items:center;z-index:50;padding:calc(env(safe-area-inset-top,0px) + 24px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 24px) max(16px,env(safe-area-inset-left,0px))}
+.lb img{max-width:min(92vw,1000px);max-height:84vh;width:auto;height:auto;border-radius:12px}
+.lb p{color:#fff;font-size:13px;text-align:center;margin:12px 0 0}
+.lb .x,.lb .nav{all:unset;position:absolute;cursor:pointer;font-size:26px;line-height:1;width:46px;height:46px;display:grid;place-items:center;border-radius:50%;background:var(--yellow);color:var(--ink);border:2px solid var(--ink)}
 .lb .x{top:calc(env(safe-area-inset-top,0px) + 16px);right:max(16px,env(safe-area-inset-right,0px))}
 .lb .prev{left:max(16px,env(safe-area-inset-left,0px));top:50%}
 .lb .next{right:max(16px,env(safe-area-inset-right,0px));top:50%}
 
-@media (max-width:960px){
-  .hero{grid-template-columns:1fr;gap:28px;padding-block:28px 40px}
-  .folders{grid-template-columns:1fr}
-  .fold{grid-template-columns:auto minmax(0,1fr);align-items:center}
-  .fold .ficon{grid-row:span 3}
-  .grid,.grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .logo-proj{grid-template-columns:1fr;gap:18px}
-  .vids{grid-template-columns:1fr 1fr}
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;gap:36px;padding-block:20px 40px}
+  .portrait{width:min(78%,320px)}
+  .logos{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .three{grid-template-columns:repeat(2,minmax(0,1fr))}
   .char{grid-template-columns:1fr}
-  .fpanel{grid-template-columns:1fr 1fr}
+  .vids,.certs{grid-template-columns:1fr 1fr}
   .foot .wrap{grid-template-columns:1fr}
 }
 @media (max-width:560px){
-  .grid,.grid.three,.grid.two{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  .span2{grid-column:1/-1}
-  .proof{padding:6px 6px 8px}
-  .proof figcaption{font-size:12px}
-  .vids,.fpanel{grid-template-columns:1fr}
-  .proj-head{grid-template-columns:1fr;gap:10px}
-  .folio{font-size:56px}
-  .cfold{grid-template-columns:1fr;gap:14px}
-  .top nav{gap:12px}
+  .logos,.vids,.certs{grid-template-columns:1fr}
+  .gal{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .btn{padding:9px 14px;font-size:13.5px}
+  .ico{width:24px;height:24px;font-size:9.5px}
+  .top nav{gap:2px}
+  .top nav a{padding:5px 8px;font-size:13px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -220,7 +183,7 @@ section.proj{padding-block:76px 8px}
 
 <div class="wrap">
   <header class="top">
-    <b>Imam Mustofa</b>
+    <b>imam<span>.</span>mustofa</b>
     <nav aria-label="Bagian">
       <a href="#sosmed">Social Media</a>
       <a href="#logo">Logo</a>
@@ -233,12 +196,19 @@ section.proj{padding-block:76px 8px}
 
   <section class="hero">
     <div>
-      <div class="who"><img class="avatar" src="profil.jpg" alt="Foto profil Muhammad Imam Mustofa"><div class="role">Graphic Designer</div></div>
-      <h1>Muhammad<br>Imam <span class="soft">Mustofa</span></h1>
+      <span class="hello"><span class="ico" style="background:var(--yellow);color:var(--ink)">Hi</span>Muhammad Imam Mustofa<i aria-hidden="true"></i></span>
+      <h1>Desain yang bikin orang <span class="hl">berhenti scroll</span>.</h1>
+      <p class="bio">Saya <b>graphic designer yang berfokus pada social media</b>. Saya mengubah informasi padat jadi visual yang bersih, rapi, dan langsung dipahami dalam sekali lihat di feed.</p>
+      <div class="cta">
+        <a class="btn" href="#sosmed">Lihat karya</a>
+        <a class="btn ghost" href="#kontak">Hubungi saya</a>
+      </div>
     </div>
-    <div>
-      <p class="lede">Graphic designer yang berfokus pada desain media sosial.<span>Saya membuat konten yang bersih, modern, dan cepat terbaca di feed, mulai dari flyer acara sampai identitas merek.</span></p>
-      <div class="chips"><span class="chip">Social media design</span><span class="chip">Logo &amp; branding</span><span class="chip">3D</span><span class="chip">Video</span></div>
+    <div class="portrait">
+      <span class="blob" aria-hidden="true"></span>
+      <img src="profil.jpg" alt="Foto Muhammad Imam Mustofa">
+      <span class="sticker s1">Social Media Designer</span>
+      <span class="sticker s2">120+ desain feed</span>
     </div>
   </section>
 </div>
@@ -247,252 +217,84 @@ section.proj{padding-block:76px 8px}
 
   <!-- 01 SOCIAL MEDIA -->
   <section class="proj" id="sosmed">
-    <div class="proj-head">
-      <div class="folio" aria-hidden="true">01</div>
-      <div>
-        <h2>Social Media Design</h2>
-        <p>Pilih folder untuk melihat desain per klien. Tiap folder dikelompokkan per jenis konten.</p>
-      </div>
+    <div class="head">
+      <div><span class="label">01 · Karya utama</span><h2>Social Media Design</h2><p>Pilih klien, lalu pilih jenis konten untuk melihat semua desainnya.</p></div>
     </div>
-
-    <div class="folders" role="tablist" aria-label="Folder klien">
-      <button class="fold f-km" role="tab" id="t-km" aria-controls="p-km" aria-expanded="true" data-panel="p-km">
-        <span class="ficon" aria-hidden="true"><span class="back"></span><span class="paper"></span><span class="paper p2"></span><span class="front">KM</span></span>
-        <span class="ft">KM &amp; Partners</span>
-        <span class="fd">Flyer webinar &amp; kelas daring, bimtek, hari besar nasional, konten edukasi.</span>
-        <span class="fo">Buka folder</span>
-      </button>
-      <button class="fold f-kmp" role="tab" id="t-kmp" aria-controls="p-kmp" aria-expanded="false" data-panel="p-kmp">
-        <span class="ficon" aria-hidden="true"><span class="back"></span><span class="paper"></span><span class="paper p2"></span><span class="front">KMP</span></span>
-        <span class="ft">KMP Training Institute</span>
-        <span class="fd">Kelas daring, bimtek, sertifikasi BNSP, dan flyer hari nasional.</span>
-        <span class="fo">Buka folder</span>
-      </button>
-      <button class="fold f-va" role="tab" id="t-va" aria-controls="p-va" aria-expanded="false" data-panel="p-va">
-        <span class="ficon" aria-hidden="true"><span class="back"></span><span class="paper"></span><span class="paper p2"></span><span class="front">VA</span></span>
-        <span class="ft">Villa Alcheringa</span>
-        <span class="fd">Freelance: konten promosi Instagram untuk villa di Parangtritis, Yogyakarta.</span>
-        <span class="fo">Buka folder</span>
-      </button>
-    </div>
-
-    <div class="panel f-km" id="p-km" role="tabpanel" aria-labelledby="t-km">
-      <div class="panel-head"><h3>KM &amp; Partners</h3><p>Firma konsultan IT dan pengadaan. Sistem visual kobalt dan kuning untuk semua kanal Instagram.</p></div>
-      <div class="cat">
-        <h4>Flyer Webinar &amp; Kelas Daring</h4>
-        <div class="grid">
-          <figure class="proof wide span4"><button data-lb><img src="km-daring-mock.jpg" alt="Mockup kumpulan desain kelas daring KM & Partners di Instagram" loading="lazy"></button><figcaption>Seri Kelas Daring<i>Mockup feed Instagram</i></figcaption></figure>
-          <figure class="proof"><button data-lb><img src="km1.jpg" alt="Flyer Pekan Webinar Gratis: Pekan Hukum" loading="lazy"></button><figcaption>Pekan Webinar Hukum<i>Flyer webinar</i></figcaption></figure>
-          <figure class="proof"><button data-lb><img src="km3.jpg" alt="Poster 4 Minggu, 16 Narasumber, 16 Materi, 100% Gratis" loading="lazy"></button><figcaption>Kampanye Webinar Gratis<i>Poster pengumuman</i></figcaption></figure>
-          <figure class="proof"><button data-lb><img src="km6.jpg" alt="Flyer Kelas Daring Perpres 108 tentang PBJP Papua" loading="lazy"></button><figcaption>Kelas Daring Perpres 108<i>Flyer kelas daring</i></figcaption></figure>
-          <figure class="proof sq"><button data-lb><img src="km7.jpg" alt="Konten edukasi dengan karakter 3D tentang peran kepala daerah dalam APBD" loading="lazy"></button><figcaption>Konten Edukasi<i>Ilustrasi karakter 3D</i></figcaption></figure>
-        </div>
-      </div>
-      <div class="cat">
-        <h4>Bimtek &amp; Sertifikasi</h4>
-        <div class="grid">
-          <figure class="proof"><button data-lb><img src="km2.jpg" alt="Flyer bimtek Peningkatan Kompetensi KPA, PPK, PPTK di Bali" loading="lazy"></button><figcaption>Bimtek Bali<i>Flyer bimtek</i></figcaption></figure>
-          <figure class="proof sq"><button data-lb><img src="km5.jpg" alt="Flyer sertifikasi Certified Procurement Specialist (CPSp)" loading="lazy"></button><figcaption>Sertifikasi CPSp<i>Flyer sertifikasi BNSP</i></figcaption></figure>
-        </div>
-      </div>
-      <div class="cat">
-        <h4>Hari Besar &amp; Nasional</h4>
-        <div class="grid">
-          <figure class="proof wide span4"><button data-lb><img src="km-nasional-mock.jpg" alt="Mockup desain hari nasional: Maulid Nabi, Sumpah Pemuda, HUT RI, Kesaktian Pancasila, Galungan, Batik Nasional, Hari Pahlawan" loading="lazy"></button><figcaption>Seri Hari Nasional<i>Maulid Nabi, Sumpah Pemuda, HUT RI, Kesaktian Pancasila, Galungan &amp; Kuningan, Batik Nasional, Hari Pahlawan</i></figcaption></figure>
-          <figure class="proof"><button data-lb><img src="km4.jpg" alt="Poster Selamat Hari Raya Idul Fitri" loading="lazy"></button><figcaption>Idul Fitri<i>Ucapan hari raya</i></figcaption></figure>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel f-kmp" id="p-kmp" role="tabpanel" aria-labelledby="t-kmp" hidden>
-      <div class="panel-head"><h3>KMP Training Institute</h3><p>Lembaga pelatihan pengadaan. Satu kerangka layout biru-putih yang dipakai ulang supaya jadwal, narasumber, dan biaya selalu cepat terbaca.</p></div>
-      <div class="cat">
-        <h4>Kelas Daring &amp; Webinar</h4>
-        <div class="grid">
-          <figure class="proof"><button data-lb><img src="kmp1.jpg" alt="Flyer Kelas Daring: Mengenal Pemilik Manfaat dan Pinjam Bendera" loading="lazy"></button><figcaption>Pemilik Manfaat &amp; Pinjam Bendera<i>Flyer kelas daring</i></figcaption></figure>
-          <figure class="proof"><button data-lb><img src="kmp3.jpg" alt="Flyer Kelas Daring: Rancangan Kontrak Pekerjaan Konstruksi" loading="lazy"></button><figcaption>Rancangan Kontrak Konstruksi<i>Flyer kelas daring</i></figcaption></figure>
-          <figure class="proof"><button data-lb><img src="kmp7.jpg" alt="Flyer Kring Spesial gratis" loading="lazy"></button><figcaption>Kring Spesial<i>Flyer webinar gratis</i></figcaption></figure>
-        </div>
-      </div>
-      <div class="cat">
-        <h4>Bimtek &amp; Sertifikasi</h4>
-        <div class="grid">
-          <figure class="proof"><button data-lb><img src="kmp2.jpg" alt="Flyer sertifikasi Certified Procurement Officer (CPOf)" loading="lazy"></button><figcaption>Sertifikasi CPOf<i>Flyer sertifikasi BNSP</i></figcaption></figure>
-          <figure class="proof"><button data-lb><img src="kmp4.jpg" alt="Flyer sertifikasi Certified Procurement Specialist (CPSp)" loading="lazy"></button><figcaption>Sertifikasi CPSp<i>Flyer sertifikasi BNSP</i></figcaption></figure>
-          <figure class="proof"><button data-lb><img src="kmp5.jpg" alt="Flyer bimtek Mini Kompetisi E-Purchasing di Surabaya" loading="lazy"></button><figcaption>Bimtek Mini Kompetisi<i>Flyer bimtek</i></figcaption></figure>
-        </div>
-      </div>
-      <div class="cat">
-        <h4>Hari Nasional</h4>
-        <div class="grid">
-          <figure class="proof"><button data-lb><img src="kmp6.jpg" alt="Poster Hari Pahlawan Nasional" loading="lazy"></button><figcaption>Hari Pahlawan<i>Flyer hari nasional</i></figcaption></figure>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel f-va" id="p-va" role="tabpanel" aria-labelledby="t-va" hidden>
-      <div class="panel-head"><h3>Villa Alcheringa</h3><p>Proyek freelance untuk rumah pantai tropis di Parangtritis. Tipografi serif yang tenang di atas foto suasana villa, untuk mendorong pemesanan dari Instagram.</p></div>
-      <div class="cat">
-        <h4>Konten Promosi Instagram</h4>
-        <div class="grid">
-          <figure class="proof"><button data-lb><img src="va1.jpg" alt="Konten Undangan untuk jiwa yang merindukan jeda" loading="lazy"></button><figcaption>Undangan<i>Carousel fasilitas</i></figcaption></figure>
-          <figure class="proof"><button data-lb><img src="va3.jpg" alt="Konten Special Offer diskon 20%" loading="lazy"></button><figcaption>Special Offer<i>Promo diskon</i></figcaption></figure>
-          <figure class="proof"><button data-lb><img src="va7.jpg" alt="Konten Your perfect Holiday starts here" loading="lazy"></button><figcaption>Perfect Holiday<i>Kolase fasilitas</i></figcaption></figure>
-          <figure class="proof"><button data-lb><img src="va2.jpg" alt="Konten Momen Romantis di Parangtritis" loading="lazy"></button><figcaption>Momen Romantis<i>Konten suasana</i></figcaption></figure>
-          <figure class="proof"><button data-lb><img src="va4.jpg" alt="Konten Morning Bliss, Served Fresh" loading="lazy"></button><figcaption>Morning Bliss<i>Carousel sarapan</i></figcaption></figure>
-          <figure class="proof"><button data-lb><img src="va5.jpg" alt="Konten Sudut Favorite Para Tamu" loading="lazy"></button><figcaption>Sudut Favorit<i>Carousel sudut villa</i></figcaption></figure>
-          <figure class="proof"><button data-lb><img src="va6.jpg" alt="Konten Make Time for What Truly Feels Like Paradise" loading="lazy"></button><figcaption>Feels Like Paradise<i>Konten kolam</i></figcaption></figure>
-        </div>
-      </div>
+    <div class="board">
+      <div class="row-btns" role="tablist" aria-label="Klien" id="clients"></div>
+      <div class="client-info"><h3 id="cName"></h3><p id="cDesc"></p></div>
+      <div class="row-btns" role="tablist" aria-label="Jenis konten" id="cats"></div>
+      <div class="gal" id="gal"></div>
     </div>
   </section>
 
   <!-- 02 LOGO -->
   <section class="proj" id="logo">
-    <div class="proj-head">
-      <div class="folio" aria-hidden="true">02</div>
-      <div>
-        <h2>Logo Project</h2>
-        <p>Logo dan brand guideline: konsep, skema warna, aturan penggunaan, dan mockup penerapan.</p>
-      </div>
+    <div class="head">
+      <div><span class="label">02 · Branding</span><h2>Logo Project</h2><p>Logo utama tiap proyek. Brand guideline lengkap ada di Behance.</p></div>
     </div>
-
-    <article class="logo-proj">
-      <div class="logo-info">
-        <span class="label">Minuman buah</span>
-        <h3>Joocy</h3>
-        <p>Merek minuman berbasis buah dengan tagline "Fruity Joys". Huruf J dibentuk dari gelas dan sedotan, dengan tulisan tangan yang ceria untuk gaya hidup sehat dan bahagia.</p>
-        <div class="swatches"><span class="sw"><span style="background:#FAAF00"></span>#FAAF00</span><span class="sw"><span style="background:#8BC53F"></span>#8BC53F</span><span class="sw"><span style="background:#205A25"></span>#205A25</span></div>
-        <a href="https://www.behance.net/gallery/213490417/Brand-Guildelines-logo-Joocy" target="_blank" rel="noopener">Lihat full project di Behance ↗</a>
-      </div>
-      <div class="grid two">
-        <figure class="proof span2"><button data-lb><img src="jc1.jpg" alt="Logo utama Joocy Fruity Joys" loading="lazy"></button><figcaption>Logo utama</figcaption></figure>
-        <figure class="proof"><button data-lb><img src="jc-cups.jpg" alt="Mockup logo Joocy di gelas minuman" loading="lazy"></button><figcaption>Mockup gelas</figcaption></figure>
-        <figure class="proof"><button data-lb><img src="jc-sign.jpg" alt="Mockup logo Joocy di papan nama toko" loading="lazy"></button><figcaption>Mockup signage</figcaption></figure>
-        <figure class="proof wide span2"><button data-lb><img src="jc-bottles.jpg" alt="Mockup label botol jus Joocy" loading="lazy"></button><figcaption>Mockup botol</figcaption></figure>
-        <figure class="proof"><button data-lb><img src="jc3.jpg" alt="Skema warna Joocy" loading="lazy"></button><figcaption>Skema warna</figcaption></figure>
-        <figure class="proof"><button data-lb><img src="jc4.jpg" alt="Panduan safe area logo Joocy" loading="lazy"></button><figcaption>Safe area</figcaption></figure>
-        <figure class="proof span2"><button data-lb><img src="jc2.jpg" alt="Panduan penggunaan logo Joocy" loading="lazy"></button><figcaption>Penggunaan logo</figcaption></figure>
-      </div>
-    </article>
-
-    <article class="logo-proj">
-      <div class="logo-info">
-        <span class="label">Kedai kopi</span>
-        <h3>HomePerk Coffee</h3>
-        <p>Kedai kopi yang ingin terasa seperti rumah. Atap rumah, huruf h, dan cangkir kopi digabung dalam satu garis.</p>
-        <div class="swatches"><span class="sw"><span style="background:#0D4A3F"></span>Hijau tua</span><span class="sw"><span style="background:#BFA972"></span>Emas pasir</span><span class="sw"><span style="background:#000"></span>Hitam</span></div>
-        <a href="https://www.behance.net/gallery/213048235/Brand-Guildelines-Logo-HomePerk-Coffee" target="_blank" rel="noopener">Lihat full project di Behance ↗</a>
-      </div>
-      <div class="grid two">
-        <figure class="proof span2"><button data-lb><img src="hp1.jpg" alt="Mockup logo HomePerk Coffee di kaca kedai" loading="lazy"></button><figcaption>Mockup signage kaca</figcaption></figure>
-        <figure class="proof"><button data-lb><img src="hp2.jpg" alt="Logo utama HomePerk Coffee" loading="lazy"></button><figcaption>Logo utama</figcaption></figure>
-        <figure class="proof"><button data-lb><img src="hp3.jpg" alt="Konfigurasi warna logo HomePerk" loading="lazy"></button><figcaption>Konfigurasi warna</figcaption></figure>
-        <figure class="proof span2"><button data-lb><img src="hp4.jpg" alt="Paduan penggunaan logo HomePerk" loading="lazy"></button><figcaption>Paduan penggunaan logo</figcaption></figure>
-      </div>
-    </article>
-
-    <article class="logo-proj">
-      <div class="logo-info">
-        <span class="label">Villa &amp; hospitality</span>
-        <h3>Villa Alcheringa</h3>
-        <p>Rumah pantai tropis di Yogyakarta dengan pemandangan Parangtritis. Logo atap joglo yang sederhana untuk memperkuat identitas merek dan kehadirannya di media sosial.</p>
-        <div class="swatches"><span class="sw"><span style="background:#1A1D54"></span>#1A1D54</span><span class="sw"><span style="background:#79DAE1"></span>#79DAE1</span><span class="sw"><span style="background:#2DC39C"></span>#2DC39C</span></div>
-        <a href="#sosmed" data-open="p-va">Lihat konten Instagram-nya ↑</a>
-      </div>
-      <div class="grid two">
-        <figure class="proof wide span2"><button data-lb><img src="villa-logo.jpg" alt="Logo Villa Alcheringa Yogyakarta dan palet warna" loading="lazy"></button><figcaption>Logo &amp; palet warna</figcaption></figure>
-      </div>
-    </article>
+    <div class="logos">
+      <article class="logo-card">
+        <button class="art" data-lb><img src="jc1.jpg" alt="Logo Joocy Fruity Joys" loading="lazy"></button>
+        <div class="meta"><span class="label">Minuman buah</span><h3>Joocy</h3><p>Huruf J dari gelas dan sedotan, dengan tulisan tangan yang ceria.</p>
+        <a class="btn" href="https://www.behance.net/gallery/213490417/Brand-Guildelines-logo-Joocy" target="_blank" rel="noopener">Lihat detail di Behance ↗</a></div>
+      </article>
+      <article class="logo-card">
+        <button class="art" data-lb><img src="hp2.jpg" alt="Logo HomePerk Coffee" loading="lazy"></button>
+        <div class="meta"><span class="label">Kedai kopi</span><h3>HomePerk Coffee</h3><p>Atap rumah, huruf h, dan cangkir kopi dalam satu garis.</p>
+        <a class="btn" href="https://www.behance.net/gallery/213048235/Brand-Guildelines-Logo-HomePerk-Coffee" target="_blank" rel="noopener">Lihat detail di Behance ↗</a></div>
+      </article>
+      <article class="logo-card">
+        <button class="art" data-lb><img src="villa-logo.jpg" alt="Logo Villa Alcheringa" loading="lazy" style="object-fit:contain;background:#fff"></button>
+        <div class="meta"><span class="label">Villa &amp; hospitality</span><h3>Villa Alcheringa</h3><p>Atap joglo sederhana untuk rumah pantai tropis di Parangtritis.</p>
+        <a class="btn" href="https://www.behance.net/imammustofa2" target="_blank" rel="noopener">Lihat di Behance ↗</a></div>
+      </article>
+    </div>
   </section>
 
   <!-- 03 3D -->
   <section class="proj" id="aset3d">
-    <div class="proj-head">
-      <div class="folio" aria-hidden="true">03</div>
-      <div>
-        <h2>Aset 3D &amp; Karakter</h2>
-        <p>Model dan render 3D di Blender: konsep plakat untuk Sarasehan Nasional PBJ dan desain interior ruang keluarga. Ditambah desain karakter orisinal, Sang Kodomo.</p>
-      </div>
+    <div class="head">
+      <div><span class="label">03 · Blender</span><h2>Aset 3D &amp; Karakter</h2><p>Konsep plakat 3D, desain interior, dan karakter orisinal.</p></div>
     </div>
-    <div class="grid">
-      <figure class="proof"><button data-lb><img src="3d-plakat1.jpg" alt="Render 3D plakat, konsep 1" loading="lazy" style="aspect-ratio:16/10"></button><figcaption>Plakat konsep 1</figcaption></figure>
-      <figure class="proof"><button data-lb><img src="3d-plakat2.jpg" alt="Render 3D plakat, konsep 2" loading="lazy" style="aspect-ratio:16/10"></button><figcaption>Plakat konsep 2</figcaption></figure>
-      <figure class="proof"><button data-lb><img src="3d-plakat3.jpg" alt="Render 3D plakat, konsep 3" loading="lazy" style="aspect-ratio:16/10"></button><figcaption>Plakat konsep 3</figcaption></figure>
-      <figure class="proof"><button data-lb><img src="3d-plakat4.jpg" alt="Render 3D plakat, konsep 4" loading="lazy" style="aspect-ratio:16/10"></button><figcaption>Plakat konsep 4</figcaption></figure>
-      <figure class="proof wide span4"><button data-lb><img src="3d-ruangan.jpg" alt="Render 3D ruang keluarga isometrik dari dua sudut" loading="lazy"></button><figcaption>Desain 3D ruangan</figcaption></figure>
+    <div class="three">
+      <button class="tile" data-lb><img src="3d-plakat1.jpg" alt="Render 3D plakat, konsep 1" loading="lazy"></button>
+      <button class="tile" data-lb><img src="3d-plakat2.jpg" alt="Render 3D plakat, konsep 2" loading="lazy"></button>
+      <button class="tile" data-lb><img src="3d-plakat3.jpg" alt="Render 3D plakat, konsep 3" loading="lazy"></button>
+      <button class="tile" data-lb><img src="3d-plakat4.jpg" alt="Render 3D plakat, konsep 4" loading="lazy"></button>
+      <button class="tile wide" data-lb><img src="3d-ruangan.jpg" alt="Render 3D ruang keluarga isometrik" loading="lazy"></button>
     </div>
     <div class="char">
-      <figure class="proof"><button data-lb><img src="karakter.jpg" alt="Desain karakter Sang Kodomo dan Riko Regus" loading="lazy"></button><figcaption>Sang Kodomo<i>Desain karakter</i></figcaption></figure>
-      <div class="charinfo">
+      <button class="tile" data-lb><img src="karakter.jpg" alt="Desain karakter Sang Kodomo" loading="lazy"></button>
+      <div>
         <span class="label">Karakter orisinal</span>
         <h3>Sang Kodomo</h3>
-        <p>Riko Regus adalah ranger Indonesia yang melindungi komodo di Nusa Tenggara Timur. Setelah kecelakaan di pusat konservasi, formula regenerasi berbasis DNA komodo mengubahnya menjadi Sang Kodomo. Kini ia memakai kekuatannya untuk melindungi komodo, masyarakat, dan alam NTT.</p>
-        <dl><dt>Basis tubuh</dt><dd>Animal</dd><dt>Kekuatan</dt><dd>Meta</dd><dt>Kostum</dt><dd>Bestial</dd><dt>Status</dt><dd>Ranger Indonesia</dd></dl>
+        <p>Riko Regus, ranger penjaga komodo di Nusa Tenggara Timur, berubah menjadi Sang Kodomo setelah terpapar formula regenerasi berbasis DNA komodo. Kini ia melindungi komodo, masyarakat, dan alam NTT.</p>
+        <div class="tags"><span class="tag">Wujud manusia &amp; monster</span><span class="tag">Kostum ranger</span><span class="tag">Cerita asal-usul</span></div>
       </div>
     </div>
   </section>
 
   <!-- 04 VIDEO -->
   <section class="proj" id="video">
-    <div class="proj-head">
-      <div class="folio" aria-hidden="true">04</div>
-      <div>
-        <h2>Video</h2>
-        <p>Konsep, pengambilan gambar, dan editing. Klik untuk menonton di YouTube.</p>
-      </div>
-    </div>
+    <div class="head"><div><span class="label">04 · Motion</span><h2>Video</h2><p>Konsep, pengambilan gambar, dan editing. Klik untuk menonton di YouTube.</p></div></div>
     <div class="vids">
-      <a class="vid" href="https://youtu.be/8YJ6EnhH2ow" target="_blank" rel="noopener">
-        <div class="thumb"><img src="yt1.jpg" alt="Cuplikan MV Badai Pasti Berlalu" loading="lazy"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span></div>
-        <h3>MV Badai Pasti Berlalu</h3><p>Video musik naratif dengan suasana sinematik.</p>
-      </a>
-      <a class="vid" href="https://youtu.be/naWjyZQ1NFI" target="_blank" rel="noopener">
-        <div class="thumb"><img src="yt2.jpg" alt="Cuplikan After Movie pameran DKV" loading="lazy"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span></div>
-        <h3>After Movie Pameran DKV</h3><p>Dokumentasi suasana pameran karya visual.</p>
-      </a>
-      <a class="vid" href="https://youtu.be/qnXbNxinZXA" target="_blank" rel="noopener">
-        <div class="thumb"><img src="yt3.jpg" alt="Cuplikan film pendek After Hours" loading="lazy"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span></div>
-        <h3>Short Film "After Hours"</h3><p>Film pendek dengan tempo pelan dan tata cahaya minim.</p>
-      </a>
+      <a class="vid" href="https://youtu.be/8YJ6EnhH2ow" target="_blank" rel="noopener"><div class="thumb"><img src="yt1.jpg" alt="Cuplikan MV Badai Pasti Berlalu" loading="lazy"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span></div><h3>MV Badai Pasti Berlalu</h3><p>Video musik naratif.</p></a>
+      <a class="vid" href="https://youtu.be/naWjyZQ1NFI" target="_blank" rel="noopener"><div class="thumb"><img src="yt2.jpg" alt="Cuplikan After Movie pameran DKV" loading="lazy"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span></div><h3>After Movie Pameran DKV</h3><p>Dokumentasi suasana pameran.</p></a>
+      <a class="vid" href="https://youtu.be/qnXbNxinZXA" target="_blank" rel="noopener"><div class="thumb"><img src="yt3.jpg" alt="Cuplikan film pendek After Hours" loading="lazy"><span class="play"><svg viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg></span></div><h3>Short Film "After Hours"</h3><p>Film pendek bertempo pelan.</p></a>
     </div>
   </section>
 
   <!-- 05 CERTIFICATES -->
   <section class="proj" id="sertifikat">
-    <div class="proj-head">
-      <div class="folio" aria-hidden="true">05</div>
-      <div>
-        <h2>Sertifikat</h2>
-        <p>Sertifikasi dan kursus yang sudah saya selesaikan. Klik folder untuk membuka.</p>
-      </div>
+    <div class="head">
+      <div><span class="label">05 · Kredensial</span><h2>Sertifikat</h2></div>
+      <button class="btn" id="certBtn" aria-pressed="false" aria-controls="certs">Buka folder sertifikat <span class="count">3</span></button>
     </div>
-    <button class="cfold" id="folderBtn" aria-expanded="false" aria-controls="certPanel">
-      <span class="ficon" aria-hidden="true"><span class="back"></span><span class="paper"></span><span class="paper p2"></span><span class="front">3</span></span>
-      <span style="display:grid;gap:4px;min-width:0"><span class="ft">Folder Sertifikat</span><span class="fd">Adobe Certified Professional · Blender 3D Generalist · UI/UX for Beginners</span></span>
-      <span class="fo" id="folderLbl">Buka folder ↓</span>
-    </button>
-    <div class="fpanel" id="certPanel" hidden>
-      <figure class="cert">
-        <button data-lb><img src="cert-adobe.jpg" alt="Sertifikat Adobe Certified Professional: Visual Design Using Adobe Photoshop" loading="lazy"></button>
-        <span class="label">Adobe · Certiport</span>
-        <h4>Adobe Certified Professional: Visual Design Using Adobe Photoshop</h4>
-        <dl><dt>Jenis</dt><dd>Sertifikasi internasional</dd><dt>Kode verifikasi</dt><dd>2Lob-XMcB</dd></dl>
-        <a href="https://verify.certiport.com" target="_blank" rel="noopener">Verifikasi di verify.certiport.com ↗</a>
-      </figure>
-      <figure class="cert">
-        <button data-lb><img src="cert-blender.jpg" alt="Sertifikat Blender 3D Generalist Course dari Devata Studio" loading="lazy"></button>
-        <span class="label">Devata Studio</span>
-        <h4>Blender 3D Generalist Course</h4>
-        <dl><dt>Jenis</dt><dd>Sertifikat kursus</dd><dt>No. sertifikat</dt><dd>DVT.0105</dd></dl>
-      </figure>
-      <figure class="cert">
-        <button data-lb><img src="cert-uiux.jpg" alt="Sertifikat UI/UX for Beginners dari Great Learning Academy" loading="lazy"></button>
-        <span class="label">Great Learning Academy</span>
-        <h4>UI / UX for Beginners</h4>
-        <dl><dt>Jenis</dt><dd>Kursus online</dd></dl>
-        <a href="https://www.mygreatlearning.com/certificate/ZHYQKBUT" target="_blank" rel="noopener">Lihat sertifikat online ↗</a>
-      </figure>
+    <div class="certs" id="certs" hidden>
+      <figure class="cert"><button data-lb><img src="cert-adobe.jpg" alt="Sertifikat Adobe Certified Professional: Visual Design Using Adobe Photoshop" loading="lazy"></button><span>Adobe · Certiport</span><h4>Adobe Certified Professional: Visual Design Using Photoshop</h4><a href="https://verify.certiport.com" target="_blank" rel="noopener">Verifikasi (kode 2Lob-XMcB) ↗</a></figure>
+      <figure class="cert"><button data-lb><img src="cert-blender.jpg" alt="Sertifikat Blender 3D Generalist Course" loading="lazy"></button><span>Devata Studio</span><h4>Blender 3D Generalist Course</h4></figure>
+      <figure class="cert"><button data-lb><img src="cert-uiux.jpg" alt="Sertifikat UI/UX for Beginners" loading="lazy"></button><span>Great Learning Academy</span><h4>UI / UX for Beginners</h4><a href="https://www.mygreatlearning.com/certificate/ZHYQKBUT" target="_blank" rel="noopener">Lihat sertifikat online ↗</a></figure>
     </div>
   </section>
 </main>
@@ -500,10 +302,8 @@ section.proj{padding-block:76px 8px}
 <footer class="foot" id="kontak">
   <div class="wrap">
     <div>
-      <h2>Mari bikin<br>sesuatu yang <em>terbaca</em>.</h2>
-      <div class="tools" aria-label="Software">
-        <span>Adobe Illustrator</span><span>Adobe Photoshop</span><span>Adobe InDesign</span><span>Canva</span><span>Blender</span><span>Adobe Animate</span><span>Video editing</span>
-      </div>
+      <h2>Punya konten yang perlu <span>dilirik</span>? Ayo ngobrol.</h2>
+      <div class="tools" aria-label="Software"><span>Adobe Illustrator</span><span>Adobe Photoshop</span><span>Canva</span><span>Blender</span><span>Video editing</span></div>
     </div>
     <div class="contact">
       <div class="row"><span>Email</span><span><b id="em">imammustofa7628@gmail.com</b><button class="copy" data-copy="em">salin</button></span></div>
@@ -511,10 +311,9 @@ section.proj{padding-block:76px 8px}
       <div class="row"><span>Instagram</span><a href="https://www.instagram.com/imammustofaaa_/" target="_blank" rel="noopener">@imammustofaaa_ ↗</a></div>
       <div class="row"><span>LinkedIn</span><a href="https://www.linkedin.com/in/muhammad-imam-mustofa-3296952b5/" target="_blank" rel="noopener">Muhammad Imam Mustofa ↗</a></div>
       <div class="row"><span>Behance</span><a href="https://www.behance.net/imammustofa2" target="_blank" rel="noopener">behance.net/imammustofa2 ↗</a></div>
-      <div class="row"><span>Lokasi</span><b>Tangerang Selatan</b></div>
     </div>
+    <div class="sig">© Muhammad Imam Mustofa · Graphic Designer · Social Media</div>
   </div>
-  <div class="wrap"><div class="sig">© Muhammad Imam Mustofa · Graphic Designer</div></div>
 </footer>
 
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Pratinjau desain">
@@ -526,32 +325,64 @@ section.proj{padding-block:76px 8px}
 
 <script>
 (()=>{
-  /* Folder tabs */
-  const tabs=[...document.querySelectorAll('.fold')];
-  const openPanel=id=>{tabs.forEach(t=>{const on=t.dataset.panel===id; t.setAttribute('aria-expanded',on); t.querySelector('.fo').textContent=on?'Folder terbuka':'Buka folder'; document.getElementById(t.dataset.panel).hidden=!on;});};
-  tabs.forEach(t=>t.addEventListener('click',()=>{openPanel(t.dataset.panel); document.getElementById(t.dataset.panel).scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}));
-  openPanel('p-km');
-  document.querySelectorAll('[data-open]').forEach(a=>a.addEventListener('click',()=>openPanel(a.dataset.open)));
+  const P='', G='';
+  const seq=(pre,n)=>Array.from({length:n},(_,i)=>G+pre+String(i+1).padStart(2,'0')+'.jpg');
+  const DATA=[
+    {id:'km',ico:'KM',name:'KM & Partners',desc:'Firma konsultan IT dan pengadaan. Konten Instagram dengan sistem visual biru-kuning.',tall:false,cats:[
+      {id:'web',name:'Flyer Webinar',imgs:seq('kmw',38)},
+      {id:'bim',name:'Flyer Bimtek',imgs:seq('kmb',34)},
+      {id:'nas',name:'Hari Nasional',imgs:seq('kmn',16)}]},
+    {id:'kmp',ico:'KMP',name:'KMP Training Institute',desc:'Lembaga pelatihan pengadaan. Identitas baru yang lebih segar: grid, biru terang, dan aksen kuning.',tall:true,cats:[
+      {id:'web',name:'Flyer Webinar',imgs:[...seq('kpw',8),P+'kmp1.jpg',P+'kmp3.jpg',P+'kmp7.jpg']},
+      {id:'bim',name:'Flyer Bimtek',imgs:[...seq('kpb',14),P+'kmp2.jpg',P+'kmp4.jpg',P+'kmp5.jpg']},
+      {id:'nas',name:'Hari Nasional',imgs:[P+'kmp6.jpg']}]},
+    {id:'va',ico:'VA',name:'Villa Alcheringa',desc:'Freelance: konten promosi Instagram untuk villa di Parangtritis, Yogyakarta.',tall:true,cats:[
+      {id:'promo',name:'Konten Promosi',imgs:[1,3,7,2,4,5,6].map(n=>P+'va'+n+'.jpg')}]}
+  ];
+  const cEl=document.getElementById('clients'), kEl=document.getElementById('cats'), gEl=document.getElementById('gal');
+  let client=DATA[0], cat=client.cats[0];
+  const total=c=>c.cats.reduce((a,k)=>a+k.imgs.length,0);
+  function renderClients(){
+    cEl.innerHTML='';
+    DATA.forEach(c=>{const b=document.createElement('button'); b.className='btn'; b.setAttribute('role','tab'); b.setAttribute('aria-selected',c===client);
+      b.innerHTML=`<span class="ico">${c.ico}</span>${c.name}<span class="count">${total(c)}</span>`;
+      b.onclick=()=>{client=c; cat=c.cats[0]; render();}; cEl.appendChild(b);});
+    document.getElementById('cName').textContent=client.name;
+    document.getElementById('cDesc').textContent=client.desc;
+  }
+  function renderCats(){
+    kEl.innerHTML='';
+    client.cats.forEach(k=>{const b=document.createElement('button'); b.className='btn ghost'; b.setAttribute('role','tab'); b.setAttribute('aria-selected',k===cat);
+      b.innerHTML=`${k.name}<span class="count">${k.imgs.length}</span>`; b.onclick=()=>{cat=k; render();}; kEl.appendChild(b);});
+  }
+  function renderGal(){
+    gEl.className='gal'+(client.tall?' tall':'');
+    gEl.innerHTML='';
+    cat.imgs.forEach((src,i)=>{const b=document.createElement('button'); b.setAttribute('data-lb',''); const im=document.createElement('img');
+      im.loading='lazy'; im.src=src; im.alt=`${client.name} · ${cat.name} ${i+1}`; b.appendChild(im); gEl.appendChild(b);});
+  }
+  function render(){renderClients(); renderCats(); renderGal();}
+  render();
 
-  /* Lightbox: only images currently visible */
+  /* Lightbox (delegated) */
   const lb=document.getElementById('lb'), im=document.getElementById('lbi'), cap=document.getElementById('lbc');
   let list=[], i=0;
-  const vis=()=>[...document.querySelectorAll('[data-lb] img')].filter(x=>x.offsetParent!==null);
   const show=n=>{i=(n+list.length)%list.length; im.src=list[i].src; im.alt=list[i].alt; cap.textContent=list[i].alt; lb.hidden=false; document.getElementById('lbx').focus();};
-  document.querySelectorAll('[data-lb]').forEach(b=>b.addEventListener('click',()=>{list=vis(); show(list.indexOf(b.querySelector('img')));}));
-  const close=()=>{lb.hidden=true; list[i]?.closest('button').focus();};
+  document.addEventListener('click',e=>{const b=e.target.closest('[data-lb]'); if(!b) return; const scope=b.closest('#gal')||document;
+    list=[...scope.querySelectorAll('[data-lb] img')].filter(x=>x.offsetParent!==null); show(list.indexOf(b.querySelector('img')));});
+  const close=()=>{lb.hidden=true;};
   document.getElementById('lbx').onclick=close;
   document.getElementById('lbp').onclick=e=>{e.stopPropagation();show(i-1)};
   document.getElementById('lbn').onclick=e=>{e.stopPropagation();show(i+1)};
   lb.addEventListener('click',e=>{if(e.target===lb)close()});
   addEventListener('keydown',e=>{if(lb.hidden)return; if(e.key==='Escape')close(); if(e.key==='ArrowRight')show(i+1); if(e.key==='ArrowLeft')show(i-1);});
 
-  /* Certificate folder */
-  const fb=document.getElementById('folderBtn'), fp=document.getElementById('certPanel'), fl=document.getElementById('folderLbl');
-  const setFolder=open=>{fp.hidden=!open; fb.setAttribute('aria-expanded',open); fl.textContent=open?'Tutup folder ↑':'Buka folder ↓';};
-  fb.addEventListener('click',()=>setFolder(fp.hidden));
-  if(location.hash==='#sertifikat') setFolder(true);
-  addEventListener('hashchange',()=>{if(location.hash==='#sertifikat') setFolder(true)});
+  /* Certificates */
+  const cb=document.getElementById('certBtn'), cp=document.getElementById('certs');
+  const setC=o=>{cp.hidden=!o; cb.setAttribute('aria-pressed',o); cb.firstChild.textContent=o?'Tutup folder sertifikat ':'Buka folder sertifikat ';};
+  cb.onclick=()=>setC(cp.hidden);
+  if(location.hash==='#sertifikat') setC(true);
+  addEventListener('hashchange',()=>{if(location.hash==='#sertifikat') setC(true)});
 
   /* Copy */
   document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',()=>{
