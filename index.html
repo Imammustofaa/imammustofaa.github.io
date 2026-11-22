@@ -103,12 +103,17 @@ section.proj{padding-block:72px 8px}
 .cs{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:clamp(16px,3vw,36px);display:grid;gap:32px}
 .cs-ba{display:grid;gap:18px}
 .ba-head,.ba-row{display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);gap:16px;align-items:center;position:relative}
-.ba-head .tagba{justify-self:center}
+.ba-head{align-items:stretch}
+.ba-head .tagba{justify-self:center;display:grid;align-content:center;gap:1px;text-align:center;border-radius:12px;padding:6px 14px;line-height:1.3;max-width:100%}
+.ba-head .tagba b{font-size:13px;letter-spacing:.08em}
+@media (max-width:560px){.ba-head,.ba-row{grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr);gap:10px}.ba-head .tagba{font-size:10.5px;padding:6px 8px;letter-spacing:.02em}.ba-head .tagba b{font-size:11.5px}.ba-row{padding:34px 10px 12px}.ba-row .arrow{width:38px;height:38px;font-size:18px}}
 .ba-row{background:var(--bg);border-radius:18px;padding:34px 16px 16px}
 .ba-type{position:absolute;top:8px;left:50%;transform:translateX(-50%);font-size:12.5px;font-weight:800;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:2px 12px;white-space:nowrap}
 .ba-row button{all:unset;cursor:zoom-in;display:block;border-radius:12px;overflow:hidden;max-width:300px;width:100%;justify-self:center}
 .ba-row img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
 .ba-row .sq img{aspect-ratio:1}
+.yr{margin:0;display:grid;gap:8px;justify-items:center;width:100%}
+.yr figcaption{font-size:13px;font-weight:700;color:var(--muted)}
 .cs-ba figure{margin:0;display:grid;gap:10px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .pair button,.strip button{all:unset;cursor:zoom-in;display:block;border-radius:12px;overflow:hidden;background:var(--bg)}
@@ -288,15 +293,15 @@ section.proj{padding-block:72px 8px}
     </div>
     <div class="cs" data-scope>
       <div class="cs-ba">
-        <div class="ba-head"><span class="tagba">Sebelum · Firma KM &amp; Partners 2024</span><span></span><span class="tagba now">Sesudah · KMP Training Institute 2025–2026</span></div>
+        <div class="ba-head"><span class="tagba"><b>Sebelum</b></span><span></span><span class="tagba now"><b>Sesudah</b></span></div>
         <div class="ba-row"><span class="ba-type">Kelas Daring</span>
-          <button data-lb class="sq"><img src="kmw06.jpg" alt="Sebelum: flyer kelas daring KM & Partners 2024" loading="lazy"></button>
+          <figure class="yr"><button data-lb class="sq"><img src="kmw06.jpg" alt="Sebelum: flyer kelas daring KM & Partners 2024" loading="lazy"></button><figcaption>Desain 2024</figcaption></figure>
           <span class="arrow" aria-hidden="true">→</span>
-          <button data-lb><img src="kpw01.jpg" alt="Sesudah: flyer kelas daring KMP 2025" loading="lazy"></button></div>
+          <figure class="yr"><button data-lb><img src="kpw01.jpg" alt="Sesudah: flyer kelas daring KMP 2025" loading="lazy"></button><figcaption>Desain 2025</figcaption></figure></div>
         <div class="ba-row"><span class="ba-type">Sertifikasi CPSp</span>
-          <button data-lb class="sq"><img src="kmb12.jpg" alt="Sebelum: flyer sertifikasi CPSp KM & Partners 2024" loading="lazy"></button>
+          <figure class="yr"><button data-lb class="sq"><img src="kmb12.jpg" alt="Sebelum: flyer sertifikasi CPSp KM & Partners 2024" loading="lazy"></button><figcaption>Desain 2024</figcaption></figure>
           <span class="arrow" aria-hidden="true">→</span>
-          <button data-lb><img src="kmp4.jpg" alt="Sesudah: flyer sertifikasi CPSp KMP 2026" loading="lazy"></button></div>
+          <figure class="yr"><button data-lb><img src="kmp4.jpg" alt="Sesudah: flyer sertifikasi CPSp KMP 2026" loading="lazy"></button><figcaption>Desain 2026</figcaption></figure></div>
       </div>
       <div class="cs-text">
         <div class="cs-block"><span class="label">Tantangan</span><p>Konten pelatihan awalnya tayang di feed Firma KM &amp; Partners dengan gaya biru gelap dan emas. KMP merilis kelas daring tiap minggu, bimtek di berbagai kota, program sertifikasi, dan ucapan hari nasional. Tiap flyer dulu punya layout berbeda, jadi feed terlihat ramai dan informasi penting seperti tanggal, biaya, dan link daftar sulit ditemukan.</p></div>
