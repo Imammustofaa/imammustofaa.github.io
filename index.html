@@ -58,7 +58,7 @@ a{color:inherit}
 .hello{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 14px 6px 6px;font-weight:600;font-size:14px}
 .hello i{width:10px;height:10px;border-radius:50%;background:#22C55E;margin-left:8px}
 h1{font-weight:900;font-size:clamp(44px,7.4vw,96px);line-height:1.06;letter-spacing:-.05em;margin:22px 0 18px;text-wrap:balance}
-h1 .hl{background:var(--yellow);padding:0 .12em;border-radius:.12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+h1 .mark{background:linear-gradient(var(--yellow),var(--yellow)) no-repeat 0 0/100% 100%;padding:0 .12em;border-radius:.12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 h1 .bl{color:var(--blue)}
 .bio{font-size:19px;line-height:1.55;color:var(--muted);max-width:44ch;margin:0 0 26px}
 .bio b{color:var(--ink)}
@@ -259,7 +259,7 @@ section.proj{padding-block:72px 8px}
   <section class="hero">
     <div>
       <span class="hello"><span class="ico" style="background:var(--yellow);color:var(--ink)">Hi</span>Muhammad Imam Mustofa<i aria-hidden="true"></i></span>
-      <h1>Desain yang bikin orang <span class="hl">berhenti scroll</span>.</h1>
+      <h1>Desain yang bikin orang <span class="mark">berhenti scroll</span>.</h1>
       <p class="bio">Saya <b>graphic designer yang berfokus pada social media</b>. Misi saya sederhana: bikin jempol berhenti di postinganmu. Info sepadat apa pun saya ubah jadi visual yang rapi, berani, dan langsung nyantol dalam <b>3 detik pertama</b>.</p>
       <div class="cta">
         <a class="btn" href="#highlight">Lihat karya terbaik</a>
@@ -522,6 +522,117 @@ section.proj{padding-block:72px 8px}
     const fallback=()=>{const r=document.createRange(); r.selectNodeContents(el); const s=getSelection(); s.removeAllRanges(); s.addRange(r);};
     if(navigator.clipboard?.writeText) navigator.clipboard.writeText(t).then(done,fallback); else fallback();
   }));
+})();
+</script>
+
+<!-- ===== Motion layer: Lenis + GSAP (ScrollTrigger, SplitText) + Motion ===== -->
+<style>
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+.progress{position:fixed;top:0;left:0;right:0;height:4px;background:var(--yellow);transform-origin:0 50%;transform:scaleX(0);z-index:60;pointer-events:none}
+.split-mask{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+html.anim .btn:hover,html.anim .gal button:hover,html.anim .hl:hover,html.anim .vid:hover{transform:none}
+html.anim .btn,html.anim .gal button,html.anim .hl,html.anim .vid,html.anim .logo-card,html.anim .tile,html.anim .cert{will-change:transform}
+</style>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<script src="js/gsap.min.js"></script>
+<script src="js/ScrollTrigger.min.js"></script>
+<script src="js/SplitText.min.js"></script>
+<script src="js/lenis.min.js"></script>
+<script src="js/motion.js"></script>
+<script>
+(()=>{
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const G=window.gsap, ST=window.ScrollTrigger, SP=window.SplitText, L=window.Lenis, M=window.Motion;
+  if(!G||!ST) return;                       // libraries failed: page stays fully visible
+  document.documentElement.classList.add('anim');
+  G.registerPlugin(ST); if(SP) G.registerPlugin(SP);
+
+  /* 1. Lenis smooth scroll, synced to ScrollTrigger */
+  let lenis=null;
+  if(L){
+    lenis=new L({lerp:0.09,smoothWheel:true});
+    lenis.on('scroll',ST.update);
+    G.ticker.add(t=>lenis.raf(t*1000)); G.ticker.lagSmoothing(0);
+    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+      const id=a.getAttribute('href'); if(id.length<2) return; const el=document.querySelector(id); if(!el) return;
+      e.preventDefault(); lenis.scrollTo(el,{offset:-20,duration:1.4}); history.replaceState(null,'',id);
+    }));
+  }
+
+  /* scroll progress bar */
+  G.to('#progress',{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:true}});
+
+  /* helper: split into words, each wrapped in a mask */
+  const words=(el)=>{
+    if(!SP) return [el];
+    const s=new SP(el,{type:'words',wordsClass:'w'});
+    s.words.forEach(w=>{const m=document.createElement('span'); m.className='split-mask'; w.parentNode.insertBefore(m,w); m.appendChild(w); w.style.display='inline-block';});
+    return s.words;
+  };
+
+  /* 2. Hero intro: headline word by word, then elements one by one */
+  const h1=document.querySelector('.hero h1');
+  const tl=G.timeline({defaults:{ease:'power4.out'}});
+  tl.from('.top b, .top nav a',{y:-16,opacity:0,duration:.6,stagger:.05})
+    .from('.hello',{y:20,opacity:0,duration:.6},'-=.3')
+    .from(words(h1),{yPercent:115,rotate:4,duration:1,stagger:.08},'-=.3')
+    .fromTo('.hero h1 .mark',{backgroundSize:'0% 100%'},{backgroundSize:'100% 100%',duration:.8,ease:'power2.inOut'},'-=.5')
+    .from('.bio',{y:24,opacity:0,duration:.7},'-=.6')
+    .from('.cta .btn',{y:20,opacity:0,duration:.6,stagger:.1},'-=.5')
+    .from('.portrait .blob',{scale:0,rotate:-40,duration:1.1,ease:'back.out(1.6)'},'-=1.2')
+    .from('.portrait img',{scale:.85,opacity:0,duration:1},'-=.9')
+    .from('.sticker',{scale:0,opacity:0,duration:.6,stagger:.15,ease:'back.out(2.5)'},'-=.4');
+  G.to('.portrait',{yPercent:-12,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+
+  /* 3. Section titles: words rise on scroll */
+  document.querySelectorAll('section.proj .head').forEach(h=>{
+    const t=h.querySelector('h2'), lab=h.querySelector('.label'), p=h.querySelector('p'), extra=h.querySelectorAll('.btn');
+    const tlh=G.timeline({scrollTrigger:{trigger:h,start:'top 85%',once:true},defaults:{ease:'power4.out'}});
+    if(lab) tlh.from(lab,{y:14,opacity:0,duration:.5});
+    if(t) tlh.from(words(t),{yPercent:115,duration:.9,stagger:.06},'-=.2');
+    if(p) tlh.from(p,{y:16,opacity:0,duration:.6},'-=.5');
+    if(extra.length) tlh.from(extra,{y:16,opacity:0,duration:.5},'-=.4');
+  });
+
+  /* 4. Cards and blocks enter one by one */
+  const reveal=(sel,vars={})=>ST.batch(sel,{start:'top 90%',once:true,onEnter:b=>G.from(b,{y:50,opacity:0,scale:.96,duration:.9,ease:'power3.out',stagger:.09,overwrite:true,...vars})});
+  reveal('.hl'); reveal('.logo-card'); reveal('.three .tile'); reveal('.vid'); reveal('.board',{y:60}); reveal('.cs',{y:60});
+  reveal('.ba-row'); reveal('.steps li',{y:20,scale:1}); reveal('.strip button',{y:30}); reveal('.char',{y:60}); reveal('.contact .row',{x:30,y:0,scale:1});
+  G.from('.foot h2',{scrollTrigger:{trigger:'.foot',start:'top 80%',once:true},y:40,opacity:0,duration:1,ease:'power4.out'});
+
+  /* 5. Motion: hover / press springs on buttons and cards */
+  if(M&&M.animate){
+    const spring={type:'spring',stiffness:400,damping:22};
+    const bind=(el,over,out)=>{el.addEventListener('pointerenter',()=>M.animate(el,over,spring));el.addEventListener('pointerleave',()=>M.animate(el,out,spring));};
+    const wire=root=>{
+      root.querySelectorAll('.btn:not([data-m])').forEach(b=>{b.dataset.m=1;bind(b,{y:-3,scale:1.04},{y:0,scale:1});
+        b.addEventListener('pointerdown',()=>M.animate(b,{scale:.95},spring));b.addEventListener('pointerup',()=>M.animate(b,{scale:1.04},spring));});
+      root.querySelectorAll('.hl:not([data-m]),.logo-card:not([data-m]),.vid:not([data-m]),.cert:not([data-m])').forEach(c=>{c.dataset.m=1;bind(c,{y:-8,rotate:-.6},{y:0,rotate:0});});
+      root.querySelectorAll('.gal button:not([data-m]),.track button:not([data-m]),.tile:not([data-m])').forEach(c=>{c.dataset.m=1;bind(c,{y:-6,scale:1.03},{y:0,scale:1});});
+    };
+    wire(document);
+
+    /* 6. Smooth layout: gallery height morphs and new items stagger in when switching client/category */
+    const gal=document.getElementById('gal');
+    if(gal){
+      let h=gal.offsetHeight;
+      document.querySelectorAll('#clients, #cats').forEach(row=>row.addEventListener('click',()=>{h=gal.offsetHeight;},true));
+      new MutationObserver(()=>{
+        if(!gal.children.length) return;
+        const nh=gal.offsetHeight;
+        if(h&&Math.abs(nh-h)>4){ M.animate(gal,{height:[h+'px',nh+'px']},{duration:.5,ease:[.22,1,.36,1]}).finished.then(()=>{gal.style.height='';ST.refresh();}); }
+        h=nh;
+        const kids=[...gal.children].slice(0,24);
+        M.animate(kids,{opacity:[0,1],y:[24,0],scale:[.94,1]},{delay:M.stagger(.03),duration:.5,ease:[.22,1,.36,1]});
+        wire(gal);
+        document.querySelectorAll('#clients .btn, #cats .btn').forEach(b=>{if(!b.dataset.m) wire(b.parentNode);});
+      }).observe(gal,{childList:true});
+    }
+  }
+
+  addEventListener('load',()=>ST.refresh());
 })();
 </script>
 
