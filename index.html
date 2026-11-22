@@ -89,6 +89,8 @@ section.proj{padding-block:72px 8px}
 .gal button:hover{transform:translateY(-4px);box-shadow:0 14px 24px -14px rgba(11,27,63,.45)}
 .gal img{display:block;width:100%;aspect-ratio:1;object-fit:cover}
 .gal.tall img{aspect-ratio:4/5}
+.gal.story{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.gal.story img{aspect-ratio:9/16}
 
 /* Highlight */
 .hl-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
@@ -268,7 +270,7 @@ section.proj{padding-block:72px 8px}
       <span class="blob" aria-hidden="true"></span>
       <img src="profil.jpg" alt="Foto Muhammad Imam Mustofa">
       <span class="sticker s1">Social Media Designer</span>
-      <span class="sticker s2">120+ desain feed</span>
+      <span class="sticker s2">200+ desain feed</span>
     </div>
   </section>
 </div>
@@ -279,7 +281,7 @@ section.proj{padding-block:72px 8px}
   <section class="proj" id="highlight">
     <div class="head">
       <div><span class="label">01 · Pilihan</span><h2>Karya Terbaik</h2><p>Sembilan desain pilihan dari 2025–2026. Klik untuk melihat lebih besar.</p></div>
-      <a class="btn ghost" href="#sosmed">Lihat semua 140+ desain ↓</a>
+      <a class="btn ghost" href="#sosmed">Lihat semua 200+ desain ↓</a>
     </div>
     <div class="hl-grid" data-scope>
       <figure class="hl"><button data-lb><img src="kmp2.jpg" alt="KMP · Sertifikasi CPOf" loading="lazy"></button><figcaption><span class="chip-c">KMP</span>Sertifikasi CPOf</figcaption></figure><figure class="hl"><button data-lb><img src="kpw01.jpg" alt="KMP · Kelas Daring #39" loading="lazy"></button><figcaption><span class="chip-c">KMP</span>Kelas Daring #39</figcaption></figure><figure class="hl"><button data-lb><img src="kmp6.jpg" alt="KMP · Hari Pahlawan Nasional" loading="lazy"></button><figcaption><span class="chip-c">KMP</span>Hari Pahlawan Nasional</figcaption></figure><figure class="hl"><button data-lb><img src="kpw03.jpg" alt="KMP · Pekan Webinar Hukum" loading="lazy"></button><figcaption><span class="chip-c">KMP</span>Pekan Webinar Hukum</figcaption></figure><figure class="hl"><button data-lb><img src="kpb01.jpg" alt="KMP × KM · Bimtek Bali" loading="lazy"></button><figcaption><span class="chip-c">KMP × KM</span>Bimtek Bali</figcaption></figure><figure class="hl"><button data-lb><img src="vc1-1.jpg" alt="Villa Alcheringa · Carousel Undangan" loading="lazy"></button><figcaption><span class="chip-c">Villa Alcheringa</span>Carousel Undangan</figcaption></figure><figure class="hl"><button data-lb><img src="kmp1.jpg" alt="KMP · Pemilik Manfaat" loading="lazy"></button><figcaption><span class="chip-c">KMP</span>Pemilik Manfaat &amp; Pinjam Bendera</figcaption></figure><figure class="hl"><button data-lb><img src="kpw07.jpg" alt="KMP · Pekan Webinar Tenaga Kerja" loading="lazy"></button><figcaption><span class="chip-c">KMP</span>Pekan Webinar Tenaga Kerja</figcaption></figure><figure class="hl"><button data-lb><img src="kmp5.jpg" alt="KMP · Bimtek Mini Kompetisi" loading="lazy"></button><figcaption><span class="chip-c">KMP</span>Bimtek Mini Kompetisi</figcaption></figure>
@@ -433,6 +435,7 @@ section.proj{padding-block:72px 8px}
 <script>
 (()=>{
   const P='', G='';
+  const seq3=(pre,n)=>Array.from({length:n},(_,i)=>G+pre+'-'+String(i+1).padStart(2,'0')+'.jpg');
   const seq2=(pre,n)=>Array.from({length:n},(_,i)=>G+pre+'-'+(i+1)+'.jpg');
   const seq=(pre,n)=>Array.from({length:n},(_,i)=>G+pre+String(i+1).padStart(2,'0')+'.jpg');
   const DATA=[
@@ -442,8 +445,9 @@ section.proj{padding-block:72px 8px}
       {id:'nas',name:'Hari Nasional',imgs:seq('kmn',16)}]},
     {id:'kmp',ico:'KMP',name:'KMP Training Institute',desc:'Lembaga pelatihan pengadaan. Identitas baru yang lebih segar: grid, biru terang, dan aksen kuning.',tall:true,cats:[
       {id:'web',name:'Flyer Webinar',imgs:[...seq('kpw',8),P+'kmp1.jpg',P+'kmp3.jpg',P+'kmp7.jpg']},
-      {id:'bim',name:'Flyer Bimtek',imgs:[...seq('kpb',14),P+'kmp2.jpg',P+'kmp4.jpg',P+'kmp5.jpg']},
-      {id:'nas',name:'Hari Nasional',imgs:[P+'kmp6.jpg']}]},
+      {id:'bim',name:'Flyer Bimtek',imgs:[P+'kmp2.jpg',P+'kmp4.jpg',P+'kmp5.jpg',...seq3('kpb2',27),...seq('kpb',14)]},
+      {id:'nas',name:'Hari Nasional',imgs:[P+'kmp6.jpg',...seq3('kpn',30)]},
+      {id:'cov',name:'Cover Reels',imgs:[G+'kpc-01.jpg',G+'kpc-02.jpg',G+'kpc-04.jpg',G+'kpc-05.jpg',G+'kpc-06.jpg',G+'kpc-07.jpg',G+'kpc-08.jpg',G+'kpc-09.jpg',G+'kpc-10.jpg',G+'kpc-11.jpg',G+'kpc-12.jpg',G+'kpc-13.jpg',G+'kpc-14.jpg',G+'kpc-15.jpg',G+'kpc-17.jpg',G+'kpc-18.jpg'],story:true}]},
     {id:'va',ico:'VA',name:'Villa Alcheringa',desc:'Freelance: konten promosi Instagram untuk villa di Parangtritis, Yogyakarta.',tall:true,cats:[
       {id:'car',name:'Carousel',carousels:[
         {title:'Undangan',sub:'Tur fasilitas villa',imgs:seq2('vc1',8)},
@@ -484,7 +488,7 @@ section.proj{padding-block:72px 8px}
         tr.addEventListener('scroll',upd,{passive:true}); gEl.appendChild(card); requestAnimationFrame(upd);});
       return;
     }
-    gEl.className='gal'+(client.tall?' tall':'');
+    gEl.className='gal'+(cat.story?' story':client.tall?' tall':'');
     cat.imgs.forEach((src,i)=>{const b=document.createElement('button'); b.setAttribute('data-lb',''); const im=document.createElement('img');
       im.loading='lazy'; im.src=src; im.alt=`${client.name} · ${cat.name} ${i+1}`; b.appendChild(im); gEl.appendChild(b);});
   }
