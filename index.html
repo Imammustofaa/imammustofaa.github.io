@@ -219,8 +219,10 @@ section.proj{padding-block:72px 8px}
 .lb .next{right:max(16px,env(safe-area-inset-right,0px));top:50%}
 
 @media (max-width:900px){
-  .hero{grid-template-columns:1fr;gap:36px;padding-block:20px 40px}
-  .portrait{width:min(62%,250px)}
+  .hero{grid-template-columns:1fr;gap:20px;padding-block:12px 40px}
+  /* phones & tablets: photo comes first, compact, so it is visible right away */
+  .portrait{order:-1;width:min(52%,230px);justify-self:center;margin-top:8px}
+  .hero h1{margin-top:14px}
   .logos{grid-template-columns:repeat(2,minmax(0,1fr))}
   .three{grid-template-columns:repeat(2,minmax(0,1fr))}
   .char{grid-template-columns:1fr}
@@ -229,7 +231,15 @@ section.proj{padding-block:72px 8px}
 }
 @media (max-width:560px){
   .logos,.vids,.certs{grid-template-columns:1fr}
-  .gal{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .gal,.gal.story{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .gal button{border-radius:10px}
+  .top{padding-block:14px 6px}
+  .top nav{flex-wrap:nowrap;overflow-x:auto;width:calc(100% + 32px);margin-inline:-16px;padding:2px 16px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .top nav::-webkit-scrollbar{display:none}
+  .top nav a{white-space:nowrap;background:var(--card);border:1px solid var(--line)}
+  .portrait{width:min(56%,210px)}
+  .sticker{font-size:12px;padding:6px 10px}
+  .sticker.s1{left:-14%;bottom:8%}
   .btn{padding:9px 14px;font-size:13.5px}
   .ico{width:24px;height:24px;font-size:9.5px}
   .top nav{gap:2px}
