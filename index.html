@@ -85,7 +85,8 @@ section.proj{padding-block:72px 8px}
 .client-info h3{margin:0;font-size:24px;font-weight:800;letter-spacing:-.02em}
 .client-info p{margin:0;color:var(--muted);font-size:14.5px;max-width:60ch}
 .gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:20px}
-.gal button{all:unset;cursor:zoom-in;display:block;border-radius:14px;overflow:hidden;background:var(--bg);transition:box-shadow .25s}
+.gal button{all:unset;cursor:zoom-in;display:block;border-radius:14px;overflow:hidden;background:var(--bg);transition:transform .2s, box-shadow .2s}
+.gal button:hover{transform:translateY(-4px);box-shadow:0 14px 24px -14px rgba(11,27,63,.45)}
 .gal img{display:block;width:100%;aspect-ratio:1;object-fit:cover}
 .gal.tall img{aspect-ratio:4/5}
 .gal.story{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
@@ -93,7 +94,8 @@ section.proj{padding-block:72px 8px}
 
 /* Highlight */
 .hl-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.hl{margin:0;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:10px 10px 14px;transition:box-shadow .25s}
+.hl{margin:0;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:10px 10px 14px;transition:transform .2s, box-shadow .2s}
+.hl:hover{transform:translateY(-5px) rotate(-.4deg);box-shadow:0 18px 30px -18px rgba(11,27,63,.5)}
 .hl button{all:unset;cursor:zoom-in;display:block;border-radius:14px;overflow:hidden}
 .hl img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
 .hl figcaption{display:flex;align-items:center;gap:8px;margin-top:10px;font-weight:700;font-size:14.5px;padding-inline:4px}
@@ -174,9 +176,7 @@ section.proj{padding-block:72px 8px}
 /* Video */
 .vids{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .vid{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:10px 10px 16px;transition:transform .2s}
-/* Design cards stay still on hover; a 30% yellow shape appears behind them instead */
-.hl:hover,.gal button:hover,.track button:hover,.tile:hover,.logo-card:hover,.cert:hover,.vid:hover,.ba-row button:hover,.strip button:hover,.pair button:hover{box-shadow:10px 10px 0 2px rgba(255,210,51,.3)}
-.track button,.tile,.logo-card,.cert,.vid,.ba-row button,.strip button,.pair button{transition:box-shadow .25s}
+.vid:hover{transform:translateY(-4px)}
 .vid .thumb{position:relative;overflow:hidden;border-radius:14px}
 .vid img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
 .play{position:absolute;left:12px;bottom:12px;width:48px;height:48px;border-radius:50%;background:var(--yellow);border:2px solid var(--ink);display:grid;place-items:center}
@@ -532,7 +532,7 @@ html.lenis,html.lenis body{height:auto}
 .progress{position:fixed;top:0;left:0;right:0;height:4px;background:var(--yellow);transform-origin:0 50%;transform:scaleX(0);z-index:60;pointer-events:none}
 .split-mask{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
 html.anim .btn:hover,html.anim .gal button:hover,html.anim .hl:hover,html.anim .vid:hover{transform:none}
-html.anim .btn{will-change:transform}
+html.anim .btn,html.anim .gal button,html.anim .hl,html.anim .vid,html.anim .logo-card,html.anim .tile,html.anim .cert{will-change:transform}
 </style>
 <div class="progress" id="progress" aria-hidden="true"></div>
 <script src="js/gsap.min.js"></script>
@@ -588,7 +588,7 @@ html.anim .btn{will-change:transform}
   /* 3. Section titles: words rise on scroll */
   document.querySelectorAll('section.proj .head').forEach(h=>{
     const t=h.querySelector('h2'), lab=h.querySelector('.label'), p=h.querySelector('p'), extra=h.querySelectorAll('.btn');
-    const tlh=G.timeline({scrollTrigger:{trigger:h,start:'top 85%',once:true},defaults:{ease:'power4.out'}});
+    const tlh=G.timeline({scrollTrigger:{trigger:h,start:'top 85%',end:'bottom 5%',toggleActions:'restart reset restart reset'},defaults:{ease:'power4.out'}});
     if(lab) tlh.from(lab,{y:14,opacity:0,duration:.5});
     if(t) tlh.from(words(t),{yPercent:115,duration:.9,stagger:.06},'-=.2');
     if(p) tlh.from(p,{y:16,opacity:0,duration:.6},'-=.5');
@@ -596,10 +596,12 @@ html.anim .btn{will-change:transform}
   });
 
   /* 4. Cards and blocks enter one by one */
-  const reveal=(sel,vars={})=>ST.batch(sel,{start:'top 90%',once:true,onEnter:b=>G.from(b,{y:50,opacity:0,scale:.96,duration:.9,ease:'power3.out',stagger:.09,overwrite:true,...vars})});
+  /* replays every time a block scrolls into view, from below or from above */
+  const reveal=(sel,vars={})=>{const from={y:50,opacity:0,scale:.96,...vars};const show=b=>G.to(b,{x:0,y:0,opacity:1,scale:1,duration:.9,ease:'power3.out',stagger:.09,overwrite:true});const hide=b=>G.set(b,{...from,overwrite:true});
+    G.set(sel,from); ST.batch(sel,{start:'top 92%',end:'bottom 8%',onEnter:show,onEnterBack:show,onLeave:hide,onLeaveBack:hide});};
   reveal('.hl'); reveal('.logo-card'); reveal('.three .tile'); reveal('.vid'); reveal('.board',{y:60}); reveal('.cs',{y:60});
   reveal('.ba-row'); reveal('.steps li',{y:20,scale:1}); reveal('.strip button',{y:30}); reveal('.char',{y:60}); reveal('.contact .row',{x:30,y:0,scale:1});
-  G.from('.foot h2',{scrollTrigger:{trigger:'.foot',start:'top 80%',once:true},y:40,opacity:0,duration:1,ease:'power4.out'});
+  G.from('.foot h2',{scrollTrigger:{trigger:'.foot',start:'top 80%',toggleActions:'restart none none reset'},y:40,opacity:0,duration:1,ease:'power4.out'});
 
   /* 5. Motion: hover / press springs on buttons and cards */
   if(M&&M.animate){
@@ -608,6 +610,8 @@ html.anim .btn{will-change:transform}
     const wire=root=>{
       root.querySelectorAll('.btn:not([data-m])').forEach(b=>{b.dataset.m=1;bind(b,{y:-3,scale:1.04},{y:0,scale:1});
         b.addEventListener('pointerdown',()=>M.animate(b,{scale:.95},spring));b.addEventListener('pointerup',()=>M.animate(b,{scale:1.04},spring));});
+      root.querySelectorAll('.hl:not([data-m]),.logo-card:not([data-m]),.vid:not([data-m]),.cert:not([data-m])').forEach(c=>{c.dataset.m=1;bind(c,{y:-8,rotate:-.6},{y:0,rotate:0});});
+      root.querySelectorAll('.gal button:not([data-m]),.track button:not([data-m]),.tile:not([data-m])').forEach(c=>{c.dataset.m=1;bind(c,{y:-6,scale:1.03},{y:0,scale:1});});
     };
     wire(document);
 
