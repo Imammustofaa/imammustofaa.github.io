@@ -1,3 +1,8 @@
 User-agent: *
 Allow: /
+
+# Certificates stay visible on the portfolio but out of Google Images
+User-agent: Googlebot-Image
+Disallow: /cert-
+
 Sitemap: https://imammustofaa.github.io/sitemap.xml
